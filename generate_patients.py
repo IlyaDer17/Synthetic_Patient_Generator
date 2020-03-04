@@ -74,13 +74,13 @@ def main():
     return render_template("main.html", messages=messages, filenames=filenames[-1:], categor_feat=categor_feat,
                            nosologis=nosologis, complications=complications, all_patients_files=all_patients_files[-1:])
 
-#запуск модуля
+#Запуск модуля
 @app.route('/generate_patients', methods=['POST'])
 def generate_patients():
     needed_count_patients = int(request.form['needed_count_patients'])
     nosolog = request.form['nosolog']
     complication = request.form['Complications']
-    # Подбираем данные введенные пользователем
+    # Подбираем данные из формы, введенные пользователем
     
     with open('data/data.json', "r") as read_file:
         data = json.load(read_file)
@@ -94,6 +94,7 @@ def generate_patients():
     nosology_data = pd.concat([nosology_data, pd.concat([nosology_data, empty_date_set])])
     nosology_data[categor_feat] = nosology_data[categor_feat].astype('int').astype('str')
     nosology_data.fillna(nosology_data.mean(), inplace=True)
+    #Из 85000 реальных пациентов выбираем соответствующих выбранной нозологии
 
     def run_SMOTENC(nosology_data, count_patients, needed_count_patients):
         balance_for_SMOTE = [0] * (count_patients) + [1] * (count_patients + needed_count_patients)
@@ -102,7 +103,7 @@ def generate_patients():
         return pd.DataFrame(nosology_data_new[-needed_count_patients:])
 
     nosology_data_new = run_SMOTENC(nosology_data, count_patients, needed_count_patients)
-    # Создали набор синтетических пациентов согластно выбранной нозологии методом SMOTENC
+    # Создали набор синтетических пациентов из выбранных пациентов методом SMOTENC
 
     person = Person('ru')
     nosology_data_new["ФИО"] = nosology_data_new.index.map(lambda name: person.full_name())

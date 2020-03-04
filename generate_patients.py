@@ -86,7 +86,7 @@ def generate_patients():
         data = json.load(read_file)
     data = pd.DataFrame.from_dict(data)
     data_columns = list(data.columns).copy()
-    
+    #Выгружаем данные о 85000 пациентов из json файла
 
     nosology_data = data[(data[nosolog] == 1) & (data[complication] == 1)]
     count_patients = nosology_data.shape[0]

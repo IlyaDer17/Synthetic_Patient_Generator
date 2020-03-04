@@ -115,10 +115,9 @@ def generate_patients():
     all_patients_files.append(fileName)
     #Сохраняем файл с сгенерированными пациентами
     
-    data_for_show = nosology_data_new.head(5)[
-        ['ФИО', 'Возраст', 'Вес', 'Максимальное САД', 'Максимальное ДАД', 'Холестерин общий']]
-    data_for_show[['Вес', 'Максимальное САД', 'Максимальное ДАД', 'Холестерин общий']] = data_for_show[
-        ['Вес', 'Максимальное САД', 'Максимальное ДАД', 'Холестерин общий']].applymap(lambda x: round(x, 2))
+    feat_for_print=['ФИО', 'Возраст', 'Вес', 'Максимальное САД', 'Максимальное ДАД', 'Холестерин общий']
+    data_for_show = nosology_data_new.head(5)[feat_for_print]
+    data_for_show[feat_for_print] = data_for_show[feat_for_print].applymap(lambda x: round(x, 2))
     filename = render_mpl_table(data=data_for_show)
     filenames.append(filename)
     #Рисуем таблицу 5 первых синтетических пациентов и сохраняем

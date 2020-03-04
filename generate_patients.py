@@ -113,15 +113,19 @@ def generate_patients():
                              encoding="cp1251",
                              sep=" ")
     all_patients_files.append(fileName)
-
+    #Сохраняем файл с сгенерированными пациентами
+    
     data_for_show = nosology_data_new.head(5)[
         ['ФИО', 'Возраст', 'Вес', 'Максимальное САД', 'Максимальное ДАД', 'Холестерин общий']]
     data_for_show[['Вес', 'Максимальное САД', 'Максимальное ДАД', 'Холестерин общий']] = data_for_show[
         ['Вес', 'Максимальное САД', 'Максимальное ДАД', 'Холестерин общий']].applymap(lambda x: round(x, 2))
     filename = render_mpl_table(data=data_for_show)
     filenames.append(filename)
+    #Рисуем таблицу 5 первых синтетических пациентов и сохраняем
+    
     messages.append(Message(" , ".join([nosolog, complication]), needed_count_patients))
-
+    #Добавляем информацию о выполеннном запросе
+    
     return redirect(url_for('main'))
 
 

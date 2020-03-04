@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main page</title>
+</head>
+<body><center>
+<big><h3 align="center">Генерация синтетических пациентов на реальных данных</h3>
+<form method="post" action="/generate_patients">
+    <p>Выберите заболевание<br>
+     <p><input type="search" name="nosolog" list="character" size="40">
+        <datalist id="character">
+        {% for nosologe in nosologis %}
+            <option value="{{ nosologe }}"></option>
+        {% endfor %}
+    </datalist>
+
+    <p>Выберите осложнение или вид терапии</p>
+    <p><input type="search" name="Complications" list="character1" size="40">
+        <datalist id="character1">
+        {% for complication in complications %}
+            <option value="{{ complication }}"></option>
+        {% endfor %}
+    </datalist>
+
+    <p>Введите количество пациентов<br><input type="text" name="needed_count_patients" size="10">
+    <center><button type="submit" >Запуск</button></center></form>
+    {% for file in all_patients_files %}
+    <p><a href={{ file }} download>Скачать файл</a>
+    {% endfor %}
+
+
+
+<h3>Синтетические пациенты</h3>
+{% for filename in filenames %}
+<img src={{ filename }}>
+{% endfor %}
+
+<h3>Выполненные запросы</h3>
+{% for message in messages %}
+<div>Нозологии : {{ message.nosolog }} ; Количество сгенерированных пациентов : {{ message.complication }}</div>
+{% endfor %}
+</big>
+</center></body>
+</html>

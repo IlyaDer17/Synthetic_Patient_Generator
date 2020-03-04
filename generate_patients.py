@@ -12,7 +12,7 @@ import pandas as pd
 import numpy as np
 warnings.filterwarnings("ignore")
 
-# Path = 'C:/Users/user1/PycharmProjects/flask_learn'
+
 Path=os.getcwd()
 os.chdir(Path)
 

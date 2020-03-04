@@ -28,8 +28,12 @@ categor_feat = ['Пол', 'Возраст', 'Сахарный диабет', 'И
                 'Хроническая обструктивная болезнь легких', 'Ожирение', 'Артериальная Гипертензия',
                 'Аортальный порок', 'Нарушения ритма', 'Аневризма аорты', 'Гипотензивная терапия',
                 'Липидснижающие препараты', 'Аортальный стеноз', 'Аортальная регургитация', 'Курение']
+
+#Список нозологий для выбора
 nosologis = ['Сахарный диабет', 'Ишемическая болезнь сердца',
              'Хроническая обструктивная болезнь легких', 'Артериальная Гипертензия']
+
+#Список осложнений/видов терапии для выбора
 complications = ['Аортальный порок', 'Нарушения ритма', 'Аневризма аорты', 'Гипотензивная терапия',
                  'Липидснижающие препараты', 'Аортальный стеноз', 'Аортальная регургитация', 'Курение']
 
@@ -64,23 +68,25 @@ def render_mpl_table(data, col_width=3.2, row_height=0.625, font_size=14,
 def hello_word():
     return render_template("index.html")
 
-#/main страница с модулем
+#запуск html формы для страницы с модулем
 @app.route('/main', methods=['GET'])
 def main():
     return render_template("main.html", messages=messages, filenames=filenames[-1:], categor_feat=categor_feat,
                            nosologis=nosologis, complications=complications, all_patients_files=all_patients_files[-1:])
 
-
+#запуск модуля
 @app.route('/generate_patients', methods=['POST'])
 def generate_patients():
     needed_count_patients = int(request.form['needed_count_patients'])
     nosolog = request.form['nosolog']
     complication = request.form['Complications']
-    # Извлекаем данные
+    # Подбираем данные введенные пользователем
+    
     with open('data/data.json', "r") as read_file:
         data = json.load(read_file)
     data = pd.DataFrame.from_dict(data)
     data_columns = list(data.columns).copy()
+    
 
     nosology_data = data[(data[nosolog] == 1) & (data[complication] == 1)]
     count_patients = nosology_data.shape[0]

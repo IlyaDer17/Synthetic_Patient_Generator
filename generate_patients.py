@@ -59,12 +59,12 @@ def render_mpl_table(data, col_width=3.2, row_height=0.625, font_size=14,
     plt.savefig(filename)
     return filename
 
-
+#Начальная страница
 @app.route('/', methods=['GET'])
 def hello_word():
     return render_template("index.html")
 
-
+#/main страница с модулем
 @app.route('/main', methods=['GET'])
 def main():
     return render_template("main.html", messages=messages, filenames=filenames[-1:], categor_feat=categor_feat,
@@ -118,7 +118,6 @@ def generate_patients():
     return redirect(url_for('main'))
 
 
-# if __name__ == "__main__":
-#     app.run(debug=True)
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True, use_reloader=True)

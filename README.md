@@ -33,4 +33,9 @@ https://github.com/IlyaDer17/Synthetic_Patient_Generator/blob/master/README.md
 
 3. Для работы с БД ц. Алмазово нужно пропустить этот шаг
 
+![Image alt](https://github.com/IlyaDer17/Synthetic_Patient_Generator/blob/master/Data_exsample.png)
 
+{username} — ваш ник на ГитХабе;
+{repository} — репозиторий где хранятся картинки;
+{branch} — ветка репозитория;
+{path} — путь к месту нахождения картинки.

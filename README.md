@@ -3,6 +3,7 @@
 https://github.com/IlyaDer17/Synthetic_Patient_Generator/blob/master/README
 
 Руководство для практического использования модуля выгрузки данных из БД Cache
+
 Подготовка. 
 1. Если база данных принимает запросы на языке Sache Object System необходимо вручную скомпилировать class(ExtendsPersistent.DataDownload) в Cache Studio перед запуском скрипта (1) 
 2. Необходимо указать параметры доступа к БД в config_main.txt. LocationDB – путь до базы данных, при условии что БД находится на вашем ПК, FeaturesTable - Directory.txt по умолчанию, TypeDB – тип БД, Cache, SQL, другой, Catalog – адрес каталога в сети, CatalogMyPC – адрес каталога для данных пользователя (2)

@@ -39,8 +39,3 @@ https://github.com/IlyaDer17/Synthetic_Patient_Generator/blob/master/README.md
 
 Примечания
 
-* Для работы с БД ц. Алмазово нужно пропустить этот шаг
-
-** Для работы с БД ц. Алмазово Catalog и CatalogMyPC – один и тот же каталог
-
-*** Для работы с БД ц. Алмазово нужно пропустить этот шаг

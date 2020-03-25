@@ -1,5 +1,3 @@
-# Synthetic_Patient_Generator
-Генерация синтетических пациентов основанная на реальных данных
 https://github.com/IlyaDer17/Synthetic_Patient_Generator/blob/master/README.md
 
 Руководство для практического использования модуля выгрузки данных из БД Cache

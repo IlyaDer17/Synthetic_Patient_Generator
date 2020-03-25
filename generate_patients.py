@@ -12,7 +12,7 @@ import pandas as pd
 import numpy as np
 warnings.filterwarnings("ignore")
 
-# Path = 'C:/Users/user1/PycharmProjects/flask_learn'
+
 Path=os.getcwd()
 os.chdir(Path)
 
@@ -28,12 +28,16 @@ categor_feat = ['Пол', 'Возраст', 'Сахарный диабет', 'И
                 'Хроническая обструктивная болезнь легких', 'Ожирение', 'Артериальная Гипертензия',
                 'Аортальный порок', 'Нарушения ритма', 'Аневризма аорты', 'Гипотензивная терапия',
                 'Липидснижающие препараты', 'Аортальный стеноз', 'Аортальная регургитация', 'Курение']
+
+#Список нозологий для выбора
 nosologis = ['Сахарный диабет', 'Ишемическая болезнь сердца',
              'Хроническая обструктивная болезнь легких', 'Артериальная Гипертензия']
+
+#Список осложнений/видов терапии для выбора
 complications = ['Аортальный порок', 'Нарушения ритма', 'Аневризма аорты', 'Гипотензивная терапия',
                  'Липидснижающие препараты', 'Аортальный стеноз', 'Аортальная регургитация', 'Курение']
 
-
+#Функция для отрисовки таблицы первых 5 синтетических пациентов
 def render_mpl_table(data, col_width=3.2, row_height=0.625, font_size=14,
                      header_color='#40466e', row_colors=['#f1f1f2', 'w'], edge_color='w',
                      bbox=[0, 0, 1, 1], header_columns=0,
@@ -59,28 +63,30 @@ def render_mpl_table(data, col_width=3.2, row_height=0.625, font_size=14,
     plt.savefig(filename)
     return filename
 
-
+#Начальная страница
 @app.route('/', methods=['GET'])
 def hello_word():
     return render_template("index.html")
 
-
+#запуск html формы для страницы с модулем
 @app.route('/main', methods=['GET'])
 def main():
     return render_template("main.html", messages=messages, filenames=filenames[-1:], categor_feat=categor_feat,
                            nosologis=nosologis, complications=complications, all_patients_files=all_patients_files[-1:])
 
-
+#Запуск модуля
 @app.route('/generate_patients', methods=['POST'])
 def generate_patients():
     needed_count_patients = int(request.form['needed_count_patients'])
     nosolog = request.form['nosolog']
     complication = request.form['Complications']
-    # Извлекаем данные
+    # Подбираем данные из формы, введенные пользователем
+    
     with open('data/data.json', "r") as read_file:
         data = json.load(read_file)
     data = pd.DataFrame.from_dict(data)
     data_columns = list(data.columns).copy()
+    #Выгружаем данные о 85000 пациентов из json файла
 
     nosology_data = data[(data[nosolog] == 1) & (data[complication] == 1)]
     count_patients = nosology_data.shape[0]
@@ -88,6 +94,7 @@ def generate_patients():
     nosology_data = pd.concat([nosology_data, pd.concat([nosology_data, empty_date_set])])
     nosology_data[categor_feat] = nosology_data[categor_feat].astype('int').astype('str')
     nosology_data.fillna(nosology_data.mean(), inplace=True)
+    #Из 85000 реальных пациентов выбираем соответствующих выбранной нозологии
 
     def run_SMOTENC(nosology_data, count_patients, needed_count_patients):
         balance_for_SMOTE = [0] * (count_patients) + [1] * (count_patients + needed_count_patients)
@@ -96,7 +103,7 @@ def generate_patients():
         return pd.DataFrame(nosology_data_new[-needed_count_patients:])
 
     nosology_data_new = run_SMOTENC(nosology_data, count_patients, needed_count_patients)
-    # Создали набор синтетических пациентов согластно выбранной нозологии методом SMOTENC
+    # Создали набор синтетических пациентов из выбранных пациентов методом SMOTENC
 
     person = Person('ru')
     nosology_data_new["ФИО"] = nosology_data_new.index.map(lambda name: person.full_name())
@@ -106,19 +113,21 @@ def generate_patients():
                              encoding="cp1251",
                              sep=" ")
     all_patients_files.append(fileName)
-
-    data_for_show = nosology_data_new.head(5)[
-        ['ФИО', 'Возраст', 'Вес', 'Максимальное САД', 'Максимальное ДАД', 'Холестерин общий']]
-    data_for_show[['Вес', 'Максимальное САД', 'Максимальное ДАД', 'Холестерин общий']] = data_for_show[
-        ['Вес', 'Максимальное САД', 'Максимальное ДАД', 'Холестерин общий']].applymap(lambda x: round(x, 2))
+    #Сохраняем файл с сгенерированными пациентами
+    
+    feat_for_print=['ФИО', 'Возраст', 'Вес', 'Максимальное САД', 'Максимальное ДАД', 'Холестерин общий']
+    data_for_show = nosology_data_new.head(5)[feat_for_print]
+    data_for_show[feat_for_print] = data_for_show[feat_for_print].applymap(lambda x: round(x, 2))
     filename = render_mpl_table(data=data_for_show)
     filenames.append(filename)
+    #Рисуем таблицу 5 первых синтетических пациентов и сохраняем
+    
     messages.append(Message(" , ".join([nosolog, complication]), needed_count_patients))
-
+    #Добавляем информацию о выполеннном запросе
+    
     return redirect(url_for('main'))
 
 
-# if __name__ == "__main__":
-#     app.run(debug=True)
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True, use_reloader=True)

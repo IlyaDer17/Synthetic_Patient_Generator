@@ -15,9 +15,13 @@ https://github.com/IlyaDer17/Synthetic_Patient_Generator/blob/master/README.md
 
 Далее через веб-интерфейс пользователь может задать параметры генерации синтетических пациентов.
 
-**Веб-интерфейс** ![Image alt](https://github.com/IlyaDer17/Synthetic_Patient_Generator/blob/master/Web_interface.png)
+**Веб-интерфейс** 
 
-Далее создается файл с синтетическими пациентами, пример такого файла https://github.com/IlyaDer17/Synthetic_Patient_Generator/blob/master/Пример_файл_15_синтетических_пациентов.xls
+![Image alt](https://github.com/IlyaDer17/Synthetic_Patient_Generator/blob/master/Web_interface.png)
+
+Далее создается файл с синтетическими пациентами, пример такого файла 
+
+https://github.com/IlyaDer17/Synthetic_Patient_Generator/blob/master/Пример_файл_15_синтетических_пациентов.xls
 
 
 

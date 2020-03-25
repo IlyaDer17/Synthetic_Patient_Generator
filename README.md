@@ -1,15 +1,15 @@
-***Руководство для практического использования модуля выгрузки данных из БД Cache
+***Руководство для практического использования модуля выгрузки данных из БД Cache***
 https://github.com/IlyaDer17/Synthetic_Patient_Generator/blob/master/README.md
 
-**Процесс работы.
+**Процесс работы.**
 
 Сначала модуль для выгрузки данных подключается к БД, выгружает и структурирует данные согласно пользовательскому запросу.
 
-**Схема работы модуля 
+**Схема работы модуля**
 
 ![Image alt](https://github.com/IlyaDer17/Synthetic_Patient_Generator/blob/master/Work_Scheme.png)
 
-**Пример результата работы модуля 
+**Пример результата работы модуля**
 
 ![Image alt](https://github.com/IlyaDer17/Synthetic_Patient_Generator/blob/master/Data_exsample.png)
 
@@ -21,7 +21,7 @@ https://github.com/IlyaDer17/Synthetic_Patient_Generator/blob/master/README.md
 
 
 
-**Подготовка.
+**Подготовка.**
 
 Если база данных принимает запросы на языке Sache Object System необходимо вручную скомпилировать class(ExtendsPersistent.DataDownload) в Cache Studio перед запуском скрипта * 
 
@@ -29,13 +29,16 @@ https://github.com/IlyaDer17/Synthetic_Patient_Generator/blob/master/README.md
 
 Необходимо заполнить ConfigCache ***
 
-**Запуск.
+**Запуск.**
 
 Модуль запускается через python main.py. Для работы модуля необходим интерпретатор python не ниже 3.6. Далее необходимо следовать указаниям выводимым скриптом в командную строку.
 
-**Результат.
+**Результат.**
 
 Если модуль отработал без ошибок, файл с данными будет лежать в указанной вами директории.
 
 Примечания
+* Для работы с БД ц. Алмазово нужно пропустить этот шаг
+** Для работы с БД ц. Алмазово Catalog и CatalogMyPC – один и тот же каталог
+*** Для работы с БД ц. Алмазово нужно пропустить этот шаг
 
